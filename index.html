@@ -10,9 +10,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;600&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;600&family=Quicksand:wght@400;600&display=swap");
+      
       .font-romantic {
         font-family: "Dancing Script", cursive;
+      }
+      .font-body {
+        font-family: "Quicksand", sans-serif;
       }
       body {
         font-family: "Inter", sans-serif;
@@ -26,21 +30,48 @@
         height: 100%;
         z-index: -1;
       }
+      
+      /* Animasi Bayangan Putih Berkedip (Glowing Pulse) */
+      @keyframes white-glow {
+        0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.1); }
+        50% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.5); border-color: rgba(255, 255, 255, 0.4); }
+        100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.1); }
+      }
+      
+      .popup-glow {
+        animation: white-glow 3s infinite ease-in-out;
+      }
+
+      /* Scrollbar Custom biar rapi di dalam popup */
+      .custom-scroll::-webkit-scrollbar {
+        width: 8px;
+      }
+      .custom-scroll::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+      }
+      .custom-scroll::-webkit-scrollbar-thumb {
+        background: rgba(236, 72, 153, 0.5); /* Pink color */
+        border-radius: 10px;
+      }
     </style>
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>"
     />
   </head>
-  <body class="text-white flex items-center justify-center min-h-screen p-6">
+  <body class="text-white flex items-center justify-center min-h-screen p-6 overflow-hidden">
+    
     <div
       class="stars bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black"
     ></div>
 
     <div
-      class="max-w-lg w-full bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-2xl text-center animate__animated animate__fadeIn"
+      id="homeCard"
+      class="max-w-lg w-full bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-2xl text-center animate__animated animate__fadeIn transition-all duration-500"
     >
-      <h1 class="font-romantic text-4xl text-pink-400 mb-6">
+      <h1 class="font-romantic text-4xl text-pink-400 mb-6">Happy Valentine Sayanggg</h1>
+      <h1 class="font-romantic text-3xl text-pink-400 mb-6">
         Miles Apart, But Close at Heart
       </h1>
 
@@ -93,56 +124,186 @@
           </button>
         </div>
 
-        <a
-          href="gallery.html"
+        <button
+          onclick="openGallery()"
           class="block w-full border border-pink-400/50 text-pink-400 text-sm font-medium py-3 rounded-xl text-center hover:bg-pink-400/10 transition-all"
         >
           Click Me 😁
-        </a>
+        </button>
       </div>
-
-   
     </div>
 
+    <div id="galleryModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 sm:p-6">
+        
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="closeGallery()"></div>
+        
+        <div class="relative w-full max-w-4xl h-[85vh] bg-[#0f172a] rounded-3xl border border-white/10 popup-glow overflow-hidden flex flex-col animate__animated animate__zoomIn">
+            
+            <button onclick="closeGallery()" class="absolute top-4 right-4 z-20 bg-black/50 hover:bg-pink-600 text-white rounded-full p-2 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <div class="overflow-y-auto custom-scroll p-6 sm:p-10 font-body">
+                
+                <header class="text-center mb-12 mt-4">
+                    <h1 class="font-romantic text-4xl sm:text-5xl text-pink-400 mb-2">
+                      Galeri Kenangan
+                    </h1>
+                    <p class="text-gray-400">Setiap detik bersamamu adalah favoritku.</p>
+                </header>
+        
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                    <!-- 1 -->
+                    <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-1.jpg" alt="Kenangan 1" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">First Date Kita 😍</p>
+                      </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-2.jpg" alt="Kenangan 2" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Waktu aku ulang tahun 💝</p>
+                      </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-3.jpg" alt="Kenangan 3" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Movie Date Pertama Kita 🍿</p>
+                      </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-4.jpg" alt="Kenangan 1" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Pertama Kali Kita lari 🏃‍♂️‍➡️</p>
+                      </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-5.jpg" alt="Kenangan 2" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Waktu Ke Blok M 🚇</p>
+                      </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-6.jpg" alt="Kenangan 3" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Waktu kita Camping dan Ke Curug 🏕️</p>
+                      </div>
+                    </div>
+                    <!-- 3 -->
+                     <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-7.jpg" alt="Kenangan 1" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Waktu Kita Double Date ✌️</p>
+                      </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-8.jpg" alt="Kenangan 2" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Waktu Ngantri Beli Kebab 🌯</p>
+                      </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-9.jpg" alt="Kenangan 3" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Waktu Kita ke Bogor 🛵</p>
+                      </div>
+                    </div>
+                    <!-- 4 -->
+                     <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-10.jpg" alt="Kenangan 1" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Waktu kita Kehujanan di Bogor 🌧️</p>
+                      </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-11.jpg" alt="Kenangan 2" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Wahtu Aku Minta Maaf 🙏</p>
+                      </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-2xl aspect-square bg-gray-800 shadow-[0_0_25px_rgba(255,255,255,0.1)] border border-white/5 transition-all duration-300 hover:shadow-[0_0_35px_rgba(255,255,255,0.2)]">
+                      <img src="resource/IMG-12.jpg" alt="Kenangan 3" class="object-cover w-full h-full transition duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                      <div class="absolute bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent w-full">
+                        <p class="text-xs">Avatar Date Kita 📽️</p>
+                      </div>
+                    </div>
+                </div>
+        
+                <div class="bg-white/5 border border-white/10 p-8 rounded-3xl text-center mb-12">
+                    <h2 class="font-romantic text-3xl text-pink-300 mb-6">
+                      Pesan Untukmu...
+                    </h2>
+                    <div class="space-y-6 text-lg italic text-gray-200">
+                      <p>"Kalau jarak itu adalah ujian, aku yakin kita bakal dapet nilai A+, karena nggak ada yang bisa ngalahin keras kepalanya aku buat tetep sayang sama kamu."</p>
+                      <p>"Kamu tahu nggak bedanya kamu sama modem? Kalau modem menghubungkan aku ke internet, kalau kamu menghubungkan aku ke masa depan."</p>
+                      <p>"Bandung - Bekasi itu jauh, tapi di setiap ketikan chat kamu, aku ngerasa kamu cuma sejarak satu pelukan."</p>
+                      <p>"Mungkin aku bukan yang terbaik, tapi aku janji bakal jadi yang terbaik buat kamu. Karena kamu adalah alasan aku pengen jadi versi terbaik dari diriku."</p>
+                      <p>"Terima kasih sudah jadi bagian terindah dalam hidupku. Aku nggak sabar buat ngebangun lebih banyak kenangan bareng kamu di masa depan."</p>
+                      <h2 class="text-2xl italic text-pink-300 mt-4">
+                        Every beautiful moment with you feels like an eternity.
+                      </h2>
+                    </div>
+                    <h1 class="text-4xl italic text-pink-300 mt-8">
+                      I Love You More Sayanggg! ❤️
+                    </h1>
+                </div>
+
+                <div class="text-center pb-4">
+                    <button onclick="closeGallery()" class="text-sm text-gray-500 hover:text-pink-400 transition underline">
+                        Tutup Galeri & Kembali ke Home
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="musicPlayer" loop>
+      <source src="resource/musik.mp4" type="audio/mpeg" />
+    </audio>
+
+    <button
+      id="musicBtn"
+      onclick="toggleMusic()"
+      class="fixed bottom-6 right-6 z-[110] bg-pink-500 text-white p-4 rounded-full shadow-lg shadow-pink-500/50 hover:bg-pink-600 transition-all active:scale-90 animate-bounce flex items-center justify-center border-2 border-white/30"
+    >
+      <svg id="iconPlay" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+      <svg id="iconPause" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+    </button>
+
     <script>
+      // LOGIKA WHATSAPP
       function sendHug() {
         const status = document.getElementById("status");
         status.style.opacity = "1";
-
         const nomorWA = "6281219810924";
-        const pesan =
-          "Halo Sayanggg! Aku baru aja kirim pelukan virtual lewat web Valentine kamu. I miss you! ❤️";
+        const pesan = "Halo Sayanggg! Aku baru aja kirim pelukan virtual lewat web Valentine kamu. I miss you! ❤️";
         const url = `https://api.whatsapp.com/send?phone=${nomorWA}&text=${encodeURIComponent(pesan)}`;
-
         setTimeout(() => {
           window.open(url, "_blank");
           status.innerText = "Redirecting to WhatsApp... 🚀";
         }, 1500);
       }
 
+      // LOGIKA COUNTDOWN
       const targetDate = new Date("2026-03-16T00:00:00").getTime();
       const countdownEl = document.getElementById("countdown");
-
       setInterval(() => {
         const now = new Date().getTime();
         const diff = targetDate - now;
-
         if (diff > 0) {
           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const hours = Math.floor(
-            (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-          );
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-          // Tampilan yang lebih presisi untuk Cahaya
           countdownEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s lagi menuju hari spesialmu!`;
         } else {
           countdownEl.innerText = "Hari spesial Cahaya sudah tiba! ❤️";
         }
       }, 1000);
 
-      // Fungsi Kontrol Musik
+      // LOGIKA MUSIK
       function toggleMusic() {
         const music = document.getElementById("musicPlayer");
         const btn = document.getElementById("musicBtn");
@@ -165,50 +326,17 @@
           btn.classList.replace("bg-pink-700", "bg-pink-500");
         }
       }
+
+      // LOGIKA POPUP GALLERY
+      function openGallery() {
+        const modal = document.getElementById('galleryModal');
+        modal.classList.remove('hidden');
+      }
+
+      function closeGallery() {
+        const modal = document.getElementById('galleryModal');
+        modal.classList.add('hidden');
+      }
     </script>
-
-    <audio id="musicPlayer" loop>
-      <source src="resource/musik.mp4" type="audio/mpeg" />
-    </audio>
-
-    <button
-      id="musicBtn"
-      onclick="toggleMusic()"
-      class="fixed bottom-6 right-6 z-50 bg-pink-500 text-white p-4 rounded-full shadow-lg shadow-pink-500/50 hover:bg-pink-600 transition-all active:scale-90 animate-bounce flex items-center justify-center border-2 border-white/30"
-    >
-      <svg
-        id="iconPlay"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M9 18V5l12-2v13"></path>
-        <circle cx="6" cy="18" r="3"></circle>
-        <circle cx="18" cy="16" r="3"></circle>
-      </svg>
-
-      <svg
-        id="iconPause"
-        class="hidden"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <rect x="6" y="4" width="4" height="16"></rect>
-        <rect x="14" y="4" width="4" height="16"></rect>
-      </svg>
-    </button>
   </body>
 </html>
